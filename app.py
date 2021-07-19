@@ -16,7 +16,9 @@ app.config['SECRET_KEY'] = "gfudhiaskhjl543278489grhuiger8934"
 
 @app.route('/api/cupcakes')
 def show_cupcakes():
-    """Return JSON {'cupcakes': [{id, flavor, size, rating, image},...]}"""
+    """Shows information on all cupcakes
+    
+    Return JSON {'cupcakes': [{id, flavor, size, rating, image},...]}"""
     
     cupcakes = Cupcake.query.all()
     serialized = [c.serialize() for c in cupcakes]
@@ -25,7 +27,9 @@ def show_cupcakes():
 
 @app.route('/api/cupcakes/<int:cupcake_id>')
 def show_cupcake(cupcake_id):
-    """Return JSON {'cupcake': {id, flavor, size, rating, image}}"""
+    """Shows information on a specific cupcake
+    
+    Return JSON {'cupcake': {id, flavor, size, rating, image}}"""
 
     cupcake = Cupcake.query.get_or_404(cupcake_id)
     serialized = cupcake.serialize()
@@ -42,12 +46,10 @@ def create_cupcake():
     flavor = request.json['flavor']
     size = request.json['size']
     rating = request.json['rating']
-    image = request.json['image']
+    image = request.json['image'] or None
 
     cupcake = Cupcake(flavor=flavor, size=size, rating=rating, image=image)
     db.session.add(cupcake)
     db.session.commit()
-
-    # serialized = cupcake.serialize()
 
     return (jsonify(cupcake=cupcake.serialize()), 201)

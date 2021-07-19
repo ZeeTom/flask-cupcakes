@@ -99,9 +99,9 @@ class CupcakeViewsTestCase(TestCase):
 
             self.assertEqual(data, {
                 "cupcake": {
-                    "flavor": "TestFlavor2",
                     "size": "TestSize2",
                     "rating": 10,
+                    "flavor": "TestFlavor2",
                     "image": "http://test.com/cupcake2.jpg"
                 }
             })

@@ -18,7 +18,7 @@ app.config['SECRET_KEY'] = "gfudhiaskhjl543278489grhuiger8934"
 def root():
     """Shows home page"""
 
-    return render_template('root.html')
+    return render_template('index.html')
 
 @app.route('/api/cupcakes')
 def show_cupcakes():
@@ -48,7 +48,7 @@ def create_cupcake():
     
     Return JSON {'cupcake': {id, flavor, size, rating, image}}
     """
-
+    
     flavor = request.json['flavor']
     size = request.json['size']
     rating = request.json['rating']
@@ -63,7 +63,10 @@ def create_cupcake():
 
 @app.route('/api/cupcakes/<int:cupcake_id>', methods=['PATCH'])
 def update_cupcake(cupcake_id):
-    """TODO: docstrings"""
+    """Update cupcake from request data & return it.
+    
+     Return JSON {'cupcake': {id, flavor, size, rating, image}}
+    """
     
     cupcake = Cupcake.query.get_or_404(cupcake_id)
 
@@ -79,6 +82,11 @@ def update_cupcake(cupcake_id):
 
 @app.route('/api/cupcakes/<int:cupcake_id>', methods=['DELETE'])
 def delete_cupcake(cupcake_id):
+    """Deletes a cupcake.
+    
+    Return JSON {"message": "Deleted"}
+    """
+
     cupcake = Cupcake.query.get_or_404(cupcake_id)
     db.session.delete(cupcake)
 

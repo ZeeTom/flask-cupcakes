@@ -32,5 +32,18 @@ class Cupcake(db.Model):
         nullable=False,
         default=DEFAULT_URL)
 
+    def serialize(self):
+        """Serialize to dictionary"""
+        
+        return {
+          "id": self.id,
+          "flavor": self.flavor,
+          "size": self.size,
+          "rating": self.rating,
+          "image": self.image
+        }
+    
     def __repr__(self):
+        """Shows info about cupcake"""
+
         return f'< Cupcake. {self.id}, {self.flavor}, {self.size}, {self.rating}. >'

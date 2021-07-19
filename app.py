@@ -1,7 +1,7 @@
 """Flask app for Cupcakes"""
 
 from models import Cupcake, db, connect_db, DEFAULT_URL
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
@@ -13,6 +13,12 @@ connect_db(app)
 db.create_all()
 
 app.config['SECRET_KEY'] = "gfudhiaskhjl543278489grhuiger8934"
+
+@app.route('/')
+def root():
+    """Shows home page"""
+
+    return render_template('root.html')
 
 @app.route('/api/cupcakes')
 def show_cupcakes():
@@ -57,6 +63,8 @@ def create_cupcake():
 
 @app.route('/api/cupcakes/<int:cupcake_id>', methods=['PATCH'])
 def update_cupcake(cupcake_id):
+    """TODO: docstrings"""
+    
     cupcake = Cupcake.query.get_or_404(cupcake_id)
 
     cupcake.flavor = request.json['flavor']
